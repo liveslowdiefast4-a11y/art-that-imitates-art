@@ -1,0 +1,42 @@
+version: '3.8'
+
+services:
+  comfyui:
+    image: comfyui/comfyui:latest
+    ports:
+      - "8188:8188"
+    volumes:
+      - ./comfyui/models:/ComfyUI/models
+      - ./comfyui/output:/ComfyUI/output
+      - ./comfyui/input:/ComfyUI/input
+      - ./comfyui/custom_nodes:/ComfyUI/custom_nodes
+    environment:
+      - CUDA_VISIBLE_DEVICES=0
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8188/system_stats"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+  python-service:
+    build:
+      context: ./python
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./python:/app
+      - ./comfyui/output:/app/output
+    environment:
+      - COMFYUI_URL=http://comfyui:8188
+      - ENVIRONMENT=development
+    depends_on:
+      comfyui:
+        condition: service_healthy
+    restart: unless-stopped
+    command: uvicorn atia_execution.main:app --host 0.0.0.0 --port 8000 --reload
+
+networks:
+  default:
+    name: atia-network

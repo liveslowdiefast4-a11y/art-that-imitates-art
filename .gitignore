@@ -1,0 +1,49 @@
+# Dependencies
+node_modules/
+__pycache__/
+*.pyc
+.venv/
+venv/
+env/
+
+# Build
+dist/
+build/
+.next/
+.turbo/
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Logs
+*.log
+logs/
+
+# Testing
+.nyc_output/
+coverage/
+
+# Docker
+.docker/
+ComfyUI/
+models/
+output/
+input/
+
+# Artifacts
+*.png
+*.jpg
+*.jpeg
+*.json.lock
+traces/
+artifacts/
