@@ -118,7 +118,8 @@ async function main() {
 
   console.log("☁️  Sovereign Cloud — direct temporary deployment");
   console.log("🔒 No Wrangler, no workerd, no Cloudflare login, no paid fallback.");
-  console.log("📜 Using your explicit acceptance of Cloudflare Terms and Privacy Policy.");\n  console.log(`🕒 Cloudflare compatibility date (UTC): ${COMPAT_DATE}`);
+  console.log("📜 Using your explicit acceptance of Cloudflare Terms and Privacy Policy.");
+  console.log(`🕒 Cloudflare compatibility date (UTC): ${COMPAT_DATE}`);
 
   console.log("\n1/7 Requesting temporary-account challenge…");
   const challenge = await apiJson(
