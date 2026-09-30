@@ -88,6 +88,33 @@ function walkFiles(root) {
   return out;
 }
 
+function buildAssetMultipart(bucket, byHash) {
+  const boundary = "----sovereign-" + crypto.randomBytes(16).toString("hex");
+  const chunks = [];
+
+  for (const hash of bucket) {
+    const file = byHash.get(hash);
+    if (!file) throw new Error(`Cloudflare requested unknown asset hash: ${hash}`);
+
+    const encoded = file.bytes.toString("base64");
+    const head =
+      `--${boundary}\r\n` +
+      `Content-Disposition: form-data; name="${hash}"\r\n` +
+      `Content-Type: ${mimeFor(file.rel)}\r\n\r\n`;
+
+    chunks.push(Buffer.from(head, "utf8"));
+    chunks.push(Buffer.from(encoded, "utf8"));
+    chunks.push(Buffer.from("\r\n", "utf8"));
+  }
+
+  chunks.push(Buffer.from(`--${boundary}--\r\n`, "utf8"));
+
+  return {
+    body: Buffer.concat(chunks),
+    contentType: `multipart/form-data; boundary=${boundary}`
+  };
+}
+
 function makeManifest(files) {
   const manifest = {};
   const byHash = new Map();
@@ -183,22 +210,19 @@ async function main() {
   if (!uploadJwt) throw new Error("Cloudflare did not return an asset upload token.");
 
   for (let i = 0; i < buckets.length; i++) {
-    const form = new FormData();
-    for (const hash of buckets[i]) {
-      const file = byHash.get(hash);
-      if (!file) throw new Error(`Cloudflare requested unknown asset hash: ${hash}`);
-      const encoded = file.bytes.toString("base64");
-      // Cloudflare's Workers Assets API expects a map of hash -> base64 string.
-      // Use a plain multipart field, not a file/Blob part.
-      form.append(hash, encoded);
-    }
+    // Cloudflare requires each field value to remain the base64 string, while
+    // also preserving each part's MIME type for serving the asset later.
+    const multipart = buildAssetMultipart(buckets[i], byHash);
 
     const res = await fetch(
       `${API}/accounts/${accountId}/workers/assets/upload?base64=true`,
       {
         method: "POST",
-        headers: { Authorization: `Bearer ${uploadJwt}` },
-        body: form
+        headers: {
+          Authorization: `Bearer ${uploadJwt}`,
+          "Content-Type": multipart.contentType
+        },
+        body: multipart.body
       }
     );
 
