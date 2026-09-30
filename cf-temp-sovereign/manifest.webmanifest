@@ -1,0 +1,17 @@
+{
+  "name": "Sovereign Cloud",
+  "short_name": "Sovereign",
+  "description": "Local-first AI with a hard zero-paid-inference policy.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#080b10",
+  "theme_color": "#0b0f14",
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
