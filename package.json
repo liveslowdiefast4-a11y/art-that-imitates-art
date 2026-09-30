@@ -1,0 +1,10 @@
+{
+  "name":"sovereign-cloud-temp-deployer",
+  "private":true,
+  "scripts":{
+    "deploy":"wrangler deploy ./cf-temp-sovereign --name sovereign-cloud --temporary --compatibility-date 2026-09-30"
+  },
+  "devDependencies":{
+    "wrangler":"latest"
+  }
+}
