@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "allow_paid_inference": false,
+  "allow_auto_topup": false,
+  "allow_paid_fallback": false,
+  "mandatory_monthly_cost": 0,
+  "currency": "AUD",
+  "continuity_rule": "degrade-never-spend",
+  "primary_execution": "browser-local",
+  "fallbacks": [
+    "webllm-webgpu",
+    "transformersjs-wasm"
+  ],
+  "server_functions_required": false
+}
