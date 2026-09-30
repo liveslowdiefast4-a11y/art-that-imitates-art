@@ -175,8 +175,11 @@ async function main() {
     "Asset upload session"
   );
 
-  let completionJwt = session.jwt;
+  const uploadJwt = session.jwt;
   const buckets = session.buckets || [];
+  let completionJwt = buckets.length === 0 ? uploadJwt : undefined;
+
+  if (!uploadJwt) throw new Error("Cloudflare did not return an asset upload token.");
 
   for (let i = 0; i < buckets.length; i++) {
     const form = new FormData();
@@ -184,14 +187,16 @@ async function main() {
       const file = byHash.get(hash);
       if (!file) throw new Error(`Cloudflare requested unknown asset hash: ${hash}`);
       const encoded = file.bytes.toString("base64");
-      form.append(hash, new Blob([encoded], { type: mimeFor(file.rel) }), hash);
+      // Cloudflare's Workers Assets API expects a map of hash -> base64 string.
+      // Use a plain multipart field, not a file/Blob part.
+      form.append(hash, encoded);
     }
 
     const res = await fetch(
       `${API}/accounts/${accountId}/workers/assets/upload?base64=true`,
       {
         method: "POST",
-        headers: { Authorization: `Bearer ${session.jwt}` },
+        headers: { Authorization: `Bearer ${uploadJwt}` },
         body: form
       }
     );
@@ -203,10 +208,15 @@ async function main() {
       throw new Error(`Asset upload failed (HTTP ${res.status})${errors?.length ? ": " + errors.join("; ") : ""}`);
     }
     if (body?.result?.jwt) completionJwt = body.result.jwt;
-    console.log(`   bucket ${i + 1}/${buckets.length} uploaded`);
+    console.log(`   bucket ${i + 1}/${buckets.length} uploaded (HTTP ${res.status}${body?.result?.jwt ? ", completion token received" : ""})`);
   }
 
-  if (!completionJwt) throw new Error("Cloudflare did not return an asset completion token.");
+  if (!completionJwt) throw new Error("Cloudflare did not return an asset completion token after the final bucket.");
+
+  const jwtSegments = String(completionJwt).split(".");
+  if (jwtSegments.length !== 3) {
+    throw new Error(`Cloudflare returned a malformed asset completion token (segments=${jwtSegments.length}). Refusing to deploy with it.`);
+  }
 
   console.log("6/7 Deploying Worker + assets…");
   const workerSource = `export default {
@@ -232,7 +242,8 @@ async function main() {
   };
 
   const deployForm = new FormData();
-  deployForm.append("metadata", new Blob([JSON.stringify(metadata)], { type: "application/json" }), "metadata.json");
+  // Match Cloudflare's multipart contract: metadata is a JSON-encoded text field.
+  deployForm.append("metadata", JSON.stringify(metadata));
   deployForm.append("worker.mjs", new Blob([workerSource], { type: "application/javascript+module" }), "worker.mjs");
 
   const deployRes = await fetch(
