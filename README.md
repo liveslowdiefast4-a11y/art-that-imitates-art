@@ -82,7 +82,7 @@ Opening that link imports this public branch, installs dependencies, and runs th
 npm run verify
 ```
 
-That command runs tests, strict typechecking, linting, >=90% coverage enforcement, the Next.js build, and the high-severity npm audit. Browser execution is supporting evidence only: a result counts as verified only when the terminal shows every gate completing successfully.
+That command runs tests, strict typechecking, linting, >=90% coverage enforcement, the Next.js build, and the high-severity npm audit. It also writes `verification-result.json`, a machine-readable Living Ledger showing pass/fail and exit code for each executed gate. Browser execution is supporting evidence only: a result counts as verified only when the ledger reports `"passed": true` and every gate completed successfully.
 
 ## Getting Started
 
