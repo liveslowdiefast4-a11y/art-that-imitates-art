@@ -1,4 +1,4 @@
 {
   "installDependencies": true,
-  "startCommand": "npm run verify"
+  "startCommand": "npm run verify:public"
 }
