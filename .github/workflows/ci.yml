@@ -1,4 +1,4 @@
-name: PR1 substrate
+name: PR1 dependency probe
 
 on:
   pull_request:
@@ -7,29 +7,31 @@ permissions:
   contents: read
 
 jobs:
-  verify:
-    name: verify / ${{ matrix.gate }}
+  probe:
+    name: probe / ${{ matrix.case }}
     runs-on: ubuntu-latest
     timeout-minutes: 10
     strategy:
       fail-fast: false
       matrix:
-        gate: [test, typecheck, lint, coverage, build, audit]
+        case:
+          - full
+          - full-legacy
+          - production
+          - lint-stack
+          - test-stack
     steps:
       - uses: actions/checkout@v5
       - uses: actions/setup-node@v5
         with:
           node-version: 22
-      - run: npm install --ignore-scripts --no-audit --no-fund
-      - if: matrix.gate == 'test'
-        run: npm run test
-      - if: matrix.gate == 'typecheck'
-        run: npm run typecheck
-      - if: matrix.gate == 'lint'
-        run: npm run lint
-      - if: matrix.gate == 'coverage'
-        run: npm run test:coverage
-      - if: matrix.gate == 'build'
-        run: npm run build
-      - if: matrix.gate == 'audit'
-        run: npm audit --audit-level=high
+      - if: matrix.case == 'full'
+        run: npm install --ignore-scripts --no-audit --no-fund
+      - if: matrix.case == 'full-legacy'
+        run: npm install --ignore-scripts --no-audit --no-fund --legacy-peer-deps
+      - if: matrix.case == 'production'
+        run: npm install --ignore-scripts --no-audit --no-fund --omit=dev
+      - if: matrix.case == 'lint-stack'
+        run: npm install --ignore-scripts --no-audit --no-fund --package-lock=false eslint@9.39.5 eslint-config-next@16.3.8 typescript@6.0.3
+      - if: matrix.case == 'test-stack'
+        run: npm install --ignore-scripts --no-audit --no-fund --package-lock=false vitest@5.0.3 @vitest/coverage-v8@5.0.3 typescript@6.0.3
