@@ -73,7 +73,7 @@ Hybrid Clean Architecture:
 ## Getting Started
 
 ### Prerequisites
-- Node.js 18+
+- Node.js 20.19+
 - Python 3.10+
 - Docker + Docker Compose
 - RTX 4090/5090-class GPU (for PR 12 hardware validation)
