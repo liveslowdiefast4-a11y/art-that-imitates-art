@@ -12,7 +12,8 @@
     "lint": "eslint . --max-warnings=0",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
-    "test:coverage": "vitest run --coverage"
+    "test:coverage": "vitest run --coverage",
+    "verify": "npm run test && npm run typecheck && npm run lint && npm run test:coverage && npm run build && npm audit --audit-level=high"
   },
   "dependencies": {
     "@trpc/server": "11.19.0",
