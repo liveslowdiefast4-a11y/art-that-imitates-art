@@ -29,3 +29,11 @@ Never add a payment method as an availability mechanism.
 Project Chimera Net v0.2.1-rc2 is integrated as a browser-local safety/kernel adapter. The UI runs the periodic wave lattice and corrected discrete CBF against explicitly labelled synthetic telemetry. Browser execution is permanently non-actuating: Genesis shared secrets and Earth Engine credentials are not shipped to static assets, and AUTHENTICATED_LIVE requires a separate trusted server-side gateway. The browser adapter therefore cannot elevate itself to live actuation.
 
 Adversarial tests live in `tests/chimera-kernel.test.mjs` and cover the former alpha=1.8 counterexample, recovery from outside the invariant set, periodic energy, actuation interlocks, and browser trust non-elevation.
+
+## Sovereign Core added tool page
+
+Open `/sovereign-core.html` from the Sovereign Cloud homepage. This is a **browser-only safe preview** port of the uploaded `.aaf` Python archive concepts, not live trusted Python execution.
+
+The tool includes residual-zero checks, a nine-phase sequential Blueprint, opaque single-use local preview receipts, pure echo and SHA-256 operations, and volatile session event history. Economic residual **must equal AUD 0**, unlike the original archive's 0.8 tolerance. No live actuation, credentials, real certificates, authority changes, persistent ledger, or network calls are available. The trusted GenieOS runtime is untouched.
+
+Run tests with `node --test tests/sovereign-core.test.mjs`. Browser UX and live deployment must be independently verified before promoting this PR.
