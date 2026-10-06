@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#0b0f14">
+  <meta name="description" content="Sovereign Core tool — local residual-zero and Blueprint phase-gate simulation.">
+  <link rel="icon" href="/icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/style.css">
+  <link rel="stylesheet" href="/sovereign-core.css">
+  <title>Sovereign Core · Sovereign Cloud</title>
+</head>
+<body>
+  <main class="shell core-shell">
+    <nav class="core-nav" aria-label="Sovereign Cloud tools">
+      <a href="/">← Sovereign Cloud</a>
+      <span>TOOLS / SOVEREIGN CORE</span>
+    </nav>
+    <header class="core-header">
+      <div>
+        <p class="eyebrow">AETHERMIND · GENIEOS · SOVEREIGN CLOUD</p>
+        <h1>Sovereign Core</h1>
+        <p class="core-lead">Explore residual-zero decisions, the nine Blueprint phases and strictly gated, local tool previews.</p>
+      </div>
+      <div class="core-status" role="status">
+        <span>LOCAL SIMULATION</span>
+        <strong id="phaseStatus">PURE_POTENTIAL</strong>
+        <small>Physical actuation locked · Paid operations disabled</small>
+      </div>
+    </header>
+    <section class="core-panel core-disclaimer" aria-label="Trust boundary">
+      <strong>Trust boundary</strong>
+      <p>This is a browser-only, non-actuating preview of the uploaded Sovereign Core architecture. Preview receipts are not authenticated certificates, do not authorize GenieOS jobs, and are not anchored to a trusted ledger.</p>
+    </section>
+    <div class="core-layout">
+      <section class="core-panel">
+        <div class="section-heading"><div><span class="eyebrow">01 / DECIDE</span><h2>Residual-zero gate</h2></div><span id="gateBadge" class="core-pill">NOT TESTED</span></div>
+        <p class="core-note">Safety, structural and economic residuals must be exactly zero. Liveness tolerance is 0–30 seconds. All inputs must be finite and nonnegative.</p>
+        <div class="core-metrics">
+          <label>Safety residual <input id="safety" type="number" min="0" step="any" value="0"></label>
+          <label>Structural residual <input id="structural" type="number" min="0" step="any" value="0"></label>
+          <label>Liveness (seconds) <input id="liveness" type="number" min="0" step="any" value="0"></label>
+          <label>Economic (AUD) <input id="economic" type="number" min="0" step="any" value="0"></label>
+        </div>
+        <div class="core-actions"><button id="evaluate" type="button">Evaluate gate</button><button id="advance" type="button" class="secondary">Advance one phase</button></div>
+        <p id="gateOutput" class="core-result" role="status" aria-live="polite">Enter residuals and evaluate the gate.</p>
+      </section>
+      <section class="core-panel">
+        <div class="section-heading"><div><span class="eyebrow">02 / PROGRESS</span><h2>Layered Blueprint</h2></div><span id="phaseCount" class="core-pill">1 / 9</span></div>
+        <ol id="phaseList" class="phase-list" aria-label="Blueprint phases"></ol>
+        <p class="core-note">Only sequential transitions are allowed. All advances are checked against the residual gate. Tool previews require exactly MANIFESTATION.</p>
+      </section>
+    </div>
+    <section class="core-panel">
+      <div class="section-heading"><div><span class="eyebrow">03 / PREVIEW</span><h2>GenieOS gated tool</h2></div><span class="core-pill">NO EXTERNAL EFFECTS</span></div>
+      <div class="core-tool-grid">
+        <label>Pure local operation
+          <select id="tool"><option value="preview.echo">Preview echo</option><option value="sha256.text">SHA-256 of text</option></select>
+        </label>
+        <label>Payload (do not enter secrets)
+          <textarea id="payload" rows="3" maxlength="4096" placeholder="Text for a local, read-only preview"></textarea>
+        </label>
+      </div>
+      <div class="core-actions"><button id="issue" type="button">Issue preview receipt</button><button id="run" type="button" class="secondary">Run local preview</button><button id="reset" type="button" class="tertiary">Reset session</button></div>
+      <p id="receipt" class="core-receipt">No preview receipt issued.</p>
+      <pre id="toolResult" class="core-output" aria-live="polite">No tool preview yet.</pre>
+    </section>
+    <section class="core-panel">
+      <div class="section-heading"><div><span class="eyebrow">04 / OBSERVE</span><h2>Session audit</h2></div><span class="core-pill">UNTRUSTED MEMORY</span></div>
+      <ol id="audit" class="core-audit"></ol>
+      <p class="core-note">Audit events exist only in this browser tab, not in GenieOS's immutable server ledger. Restarting the page loses them.</p>
+    </section>
+    <footer class="core-footer">Sovereign Core local preview v0.1.1 · $0 mandatory spend · no live Genesis session</footer>
+  </main>
+  <script type="module" src="/sovereign-core-page.mjs"></script>
+</body>
+</html>
