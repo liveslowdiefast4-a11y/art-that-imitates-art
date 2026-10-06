@@ -1,0 +1,40 @@
+.core-shell{max-width:1120px}
+.core-nav{display:flex;justify-content:space-between;align-items:center;color:#8ba3bb;font-size:.8rem;letter-spacing:.12em;margin-bottom:28px}
+.core-nav a{color:#9cd9cd;text-decoration:none;letter-spacing:normal;font-weight:700}
+.core-header{display:flex;justify-content:space-between;align-items:flex-start;gap:30px;margin-bottom:22px}
+.core-header h1{font-size:clamp(2.8rem,6vw,4.5rem);margin:0 0 10px;letter-spacing:-.04em}
+.core-lead{line-height:1.6;color:#9fb0c2;max-width:540px;margin:0}
+.core-status{flex:0 0 270px;border:1px solid #33594f;border-radius:15px;background:linear-gradient(145deg,#10221f,#0d151d);padding:18px}
+.core-status span{display:block;font-size:.73rem;letter-spacing:.13em;color:#7bd7bd;margin-bottom:10px}
+.core-status strong{display:block;overflow-wrap:anywhere;font-size:1.1rem}
+.core-status small{display:block;margin-top:9px;color:#8cafa7}
+.core-panel{background:#0d141d;border:1px solid #223344;border-radius:18px;padding:22px;margin-bottom:16px}
+.core-disclaimer{border-color:#53513a;background:#181912}.core-disclaimer strong{color:#ffcf87}
+.core-disclaimer p{margin:8px 0 0;color:#c7c0aa;line-height:1.6;font-size:.95rem}
+.core-layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px}
+.section-heading{display:flex;justify-content:space-between;gap:10px;align-items:flex-start;margin-bottom:14px}
+.section-heading h2{font-size:1.34rem;margin:4px 0 0}
+.core-pill{white-space:nowrap;border-radius:999px;padding:6px 10px;border:1px solid #34515a;color:#9ac7db;font-size:.72rem}
+.core-note{color:#91a8bd;font-size:.9rem;line-height:1.55}
+.core-metrics{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:18px 0}
+.core-metrics label,.core-tool-grid label{display:flex;flex-direction:column;gap:7px;color:#bdcad9;font-size:.86rem}
+.core-panel input,.core-panel select,.core-panel textarea{background:#081019;border:1px solid #314357;border-radius:10px;padding:11px 12px;color:#e8f3fd;font:inherit;width:100%;min-width:0}
+.core-panel input:focus-visible,.core-panel select:focus-visible,.core-panel textarea:focus-visible,.core-panel button:focus-visible{outline:2px solid #74d8c1;outline-offset:2px}
+.core-actions{display:flex;flex-wrap:wrap;gap:9px;margin-top:16px}
+.core-actions button{cursor:pointer;background:#94e1d0;color:#08141a;border:none;padding:11px 15px;font-weight:700;border-radius:10px}
+.core-actions .secondary{background:#22364a;color:#dcf0ff}
+.core-actions .tertiary{background:transparent;border:1px solid #3e5365;color:#bfcdd8}
+.core-actions button:hover{filter:brightness(1.1)}
+.core-result{min-height:44px;color:#bfcdd8;background:#0a111a;border-radius:10px;padding:12px;line-height:1.45;margin-bottom:0}
+.core-result.passed{color:#8ee3c2}.core-result.denied{color:#ffd08b}
+.phase-list{display:grid;grid-template-columns:1fr 1fr;gap:8px;list-style:none;padding:0;margin:0 0 14px;counter-reset:phase}
+.phase-list li{padding:9px 10px;border-radius:9px;background:#121e2b;color:#8b9fb4;font-size:.76rem;overflow-wrap:anywhere;border:1px solid transparent}
+.phase-list li.done{color:#92d6c7;border-color:#244f48}.phase-list li.active{background:#1b3742;border-color:#73cdb5;color:#e5fff8;font-weight:750}
+.core-tool-grid{display:grid;grid-template-columns:220px 1fr;gap:14px}
+.core-receipt{overflow-wrap:anywhere;font-size:.85rem;color:#a4c0b9;margin:16px 0 8px}
+.core-output{white-space:pre-wrap;overflow-wrap:anywhere;min-height:70px;background:#070d14;border:1px solid #293a4a;border-radius:12px;padding:16px;color:#dbecf7;line-height:1.5}
+.core-audit{max-height:230px;overflow:auto;padding-left:23px;font-size:.85rem;color:#aabdd0;line-height:1.8}
+.core-audit li{overflow-wrap:anywhere}
+.core-footer{text-align:center;font-size:.8rem;color:#7691a5;padding:18px}
+@media(max-width:780px){.core-header{flex-direction:column}.core-status{flex-basis:auto;width:100%}.core-layout{grid-template-columns:1fr}.core-tool-grid{grid-template-columns:1fr}}
+@media(max-width:520px){.core-metrics{grid-template-columns:1fr}.phase-list{grid-template-columns:1fr 1fr}.core-panel{padding:16px}.core-nav{gap:12px}}

@@ -1,5 +1,5 @@
-const CACHE='sovereign-cloud-v2-chimera';
-const CORE=['/','/index.html','/style.css','/app.js','/chimera-kernel.mjs','/manifest.webmanifest','/icon.svg'];
+const CACHE='sovereign-cloud-v3-core-tool';
+const CORE=['/','/index.html','/style.css','/app.js','/chimera-kernel.mjs','/sovereign-core.html','/sovereign-core.css','/sovereign-core.mjs','/sovereign-core-page.mjs','/manifest.webmanifest','/icon.svg'];
 self.addEventListener('install',event=>{
   event.waitUntil(caches.open(CACHE).then(c=>c.addAll(CORE)).then(()=>self.skipWaiting()));
 });

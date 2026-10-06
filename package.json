@@ -4,7 +4,8 @@
   "scripts": {
     "deploy": "wrangler deploy ./cf-temp-sovereign --name sovereign-cloud --temporary --compatibility-date 2026-09-30",
     "test:chimera": "node --test tests/chimera-kernel.test.mjs",
-    "check:sovereign": "node --check cf-temp-sovereign/app.js && node --test tests/chimera-kernel.test.mjs"
+    "check:sovereign": "node --check cf-temp-sovereign/sovereign-core-page.mjs && node --test tests/sovereign-core.test.mjs && node --test tests/chimera-kernel.test.mjs",
+    "test:sovereign-core": "node --test tests/sovereign-core.test.mjs"
   },
   "devDependencies": {
     "wrangler": "latest"
