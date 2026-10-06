@@ -1,10 +1,17 @@
 {
-  "name":"sovereign-cloud-temp-deployer",
-  "private":true,
-  "scripts":{
-    "deploy":"wrangler deploy ./cf-temp-sovereign --name sovereign-cloud --temporary --compatibility-date 2026-09-30"
+  "name": "sovereign-cloud-temp-deployer",
+  "private": true,
+  "scripts": {
+    "deploy": "wrangler deploy ./cf-temp-sovereign --name sovereign-cloud --temporary --compatibility-date 2026-09-30",
+    "test:chimera": "node --test tests/chimera-kernel.test.mjs",
+    "check:sovereign": "node --check cf-temp-sovereign/sovereign-core-page.mjs && node --test tests/sovereign-core.test.mjs && node --test tests/chimera-kernel.test.mjs",
+    "test:sovereign-core": "node --test tests/sovereign-core.test.mjs",
+    "cloudflare:connect": "node scripts/cloudflare-connect.mjs",
+    "cloudflare:verify": "npx --yes wrangler@latest whoami --json",
+    "cloudflare:deploy": "npx --yes wrangler@latest deploy --config wrangler.jsonc",
+    "cloudflare:publish": "npm run check:sovereign && npm run cloudflare:verify && npm run cloudflare:deploy"
   },
-  "devDependencies":{
-    "wrangler":"latest"
+  "devDependencies": {
+    "wrangler": "latest"
   }
 }

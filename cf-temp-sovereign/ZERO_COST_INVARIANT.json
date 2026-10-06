@@ -11,5 +11,26 @@
     "webllm-webgpu",
     "transformersjs-wasm"
   ],
-  "server_functions_required": false
+  "server_functions_required": false,
+  "chimera": {
+    "version": "0.2.1-rc2",
+    "execution": "browser-local-simulation",
+    "genesis_secret_in_browser": false,
+    "authenticated_live_requires_server_gateway": true,
+    "actuation_in_browser": false,
+    "telemetry_fallback": "synthetic-labelled",
+    "cbf": "discrete-gamma-0.8",
+    "paid_dependencies": false
+  },
+  "sovereign_core": {
+    "version": "0.1.1-preview",
+    "route": "/sovereign-core.html",
+    "execution": "browser-local-readonly-simulation",
+    "economic_residual_exactly_zero": true,
+    "allow_browser_authority": false,
+    "allow_real_certificates": false,
+    "allow_actuation": false,
+    "allow_paid_tools": false,
+    "external_ledger_anchor": false
+  }
 }
