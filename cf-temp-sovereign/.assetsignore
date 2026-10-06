@@ -1,0 +1,4 @@
+# Pages-only routing metadata; Workers Static Assets does not use it.
+_routes.json
+# Documentation is repository material, not a production asset.
+README.md
