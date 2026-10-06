@@ -1,10 +1,12 @@
 {
-  "name":"sovereign-cloud-temp-deployer",
-  "private":true,
-  "scripts":{
-    "deploy":"wrangler deploy ./cf-temp-sovereign --name sovereign-cloud --temporary --compatibility-date 2026-09-30"
+  "name": "sovereign-cloud-temp-deployer",
+  "private": true,
+  "scripts": {
+    "deploy": "wrangler deploy ./cf-temp-sovereign --name sovereign-cloud --temporary --compatibility-date 2026-09-30",
+    "test:chimera": "node --test tests/chimera-kernel.test.mjs",
+    "check:sovereign": "node --check cf-temp-sovereign/app.js && node --test tests/chimera-kernel.test.mjs"
   },
-  "devDependencies":{
-    "wrangler":"latest"
+  "devDependencies": {
+    "wrangler": "latest"
   }
 }
