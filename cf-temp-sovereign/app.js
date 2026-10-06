@@ -1,3 +1,5 @@
+import { ChimeraSovereignRuntime, CHIMERA_VERSION } from './chimera-kernel.mjs';
+
 const POLICY = Object.freeze({
   allowPaidInference: false,
   allowAutoTopUp: false,
@@ -23,9 +25,17 @@ const progress = $('progress');
 const progressBar = $('progressBar');
 const network = $('network');
 const installModel = $('installModel');
+const chimeraStateEl = $('chimeraState');
+const chimeraSourceEl = $('chimeraSource');
+const chimeraSafetyEl = $('chimeraSafety');
+const chimeraEnergyEl = $('chimeraEnergy');
+const chimeraActuationEl = $('chimeraActuation');
+const chimeraVersionEl = $('chimeraVersion');
+const runChimera = $('runChimera');
 
 let runtime = { kind: 'none', engine: null, generator: null, ready: false, loading: false };
 let history = JSON.parse(localStorage.getItem('sovereign-chat') || '[]');
+const chimera = new ChimeraSovereignRuntime();
 
 $('policyText').textContent = JSON.stringify(POLICY, null, 2);
 
@@ -56,6 +66,33 @@ function updateNetwork(){
 addEventListener('online', updateNetwork);
 addEventListener('offline', updateNetwork);
 updateNetwork();
+
+function renderChimera(snapshot){
+  const health = chimera.health();
+  chimeraVersionEl.textContent = `v${CHIMERA_VERSION}`;
+  chimeraStateEl.textContent = snapshot.operating_state;
+  chimeraSourceEl.textContent = `${snapshot.telemetry?.source || 'NONE'} · NDVI ${snapshot.telemetry?.mean_ndvi ?? '—'}`;
+  chimeraSafetyEl.textContent = snapshot.kernel
+    ? `${snapshot.kernel.safety_status} · next ${snapshot.kernel.predicted_safe_state}`
+    : 'No cycle yet';
+  chimeraEnergyEl.textContent = snapshot.kernel ? String(snapshot.kernel.lattice_energy) : '—';
+  chimeraActuationEl.textContent = health.actuation_allowed ? 'ENABLED' : 'LOCKED';
+  chimeraActuationEl.className = health.actuation_allowed ? 'ok' : 'warn';
+}
+
+function runChimeraCycle(){
+  try{
+    renderChimera(chimera.runLocalSyntheticCycle());
+  }catch(err){
+    chimeraStateEl.textContent = 'FAULTED';
+    chimeraSafetyEl.textContent = err.message;
+    chimeraActuationEl.textContent = 'LOCKED';
+    chimeraActuationEl.className = 'warn';
+  }
+}
+
+runChimera.addEventListener('click', runChimeraCycle);
+runChimeraCycle();
 
 async function chooseWebLLMModel(webllm){
   const ids = webllm.prebuiltAppConfig.model_list.map(x => x.model_id);
