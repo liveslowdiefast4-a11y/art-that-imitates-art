@@ -70,10 +70,24 @@ Hybrid Clean Architecture:
 - **90%+ test coverage** on all new code. Strict TDD (Red → Green → Refactor).
 - TS strict mode + Zod validation everywhere. Clean Architecture + DDD.
 
+## Public Zero-Cost Execution
+
+PR1 can be executed publicly in a browser-backed WebContainer without GitHub Actions or a paid runner:
+
+[Run PR1 verification in StackBlitz](https://stackblitz.com/github/liveslowdiefast4-a11y/art-that-imitates-art/tree/pr1/typescript-substrate?startScript=verify)
+
+Opening that link imports this public branch, installs dependencies, and runs the same portable verification contract used by CI:
+
+```bash
+npm run verify
+```
+
+That command runs tests, strict typechecking, linting, >=90% coverage enforcement, the Next.js build, and the high-severity npm audit. It also writes `verification-result.json`, a machine-readable Living Ledger showing pass/fail and exit code for each executed gate. Browser execution is supporting evidence only: a result counts as verified only when the ledger reports `"passed": true` and every gate completed successfully.
+
 ## Getting Started
 
 ### Prerequisites
-- Node.js 18+
+- Node.js 20.19+
 - Python 3.10+
 - Docker + Docker Compose
 - RTX 4090/5090-class GPU (for PR 12 hardware validation)
